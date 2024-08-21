@@ -8,7 +8,7 @@ namespace API.Controllers
     [ApiController]
     [Route("api/[Controller]")]
     public class UsersController(DataContext context) : ControllerBase
-    {
+    {        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsersAsync()
         {
@@ -16,13 +16,12 @@ namespace API.Controllers
 
             return users;
         }
-        [HttpGet("{id : int}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUserAsync(int id)
         {
             var user = await context.AppUsers.FindAsync(id);
 
             if (user == null) return NotFound();
-
 
             return user;
         }
