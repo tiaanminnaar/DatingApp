@@ -3,21 +3,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 /*import { Member } from '../../_models/member';*/
 import { TabDirective, TabsModule, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
-/*import { TimeagoModule } from 'ngx-timeago';*/
+import { TimeagoModule } from 'ngx-timeago';
 import { DatePipe } from '@angular/common';
 import { Member } from '../../Models/member';
 import { MembersService } from '../../_services/members.service';
-//import { MemberMessagesComponent } from "../member-messages/member-messages.component";
-//import { Message } from '../../_models/message';
-//import { MessageService } from '../../_services/message.service';
-//import { PresenceService } from '../../_services/presence.service';
-//import { AccountService } from '../../_services/account.service';
-//import { HubConnectionState } from '@microsoft/signalr';
+import { MemberMessagesComponent } from "../member-messages/member-messages.component";
+import { Message } from '../../_models/message';
+import { MessageService } from '../../_services/message.service';
+import { PresenceService } from '../../_services/presence.service';
+import { AccountService } from '../../_services/account.service';
+import { HubConnectionState } from '@microsoft/signalr';
 
 @Component({
   selector: 'app-member-detial',
   standalone: true,
-  imports: [TabsModule, GalleryModule, /*TimeagoModule,*/ DatePipe /*, MemberMessagesComponent*/],
+  imports: [TabsModule, GalleryModule, TimeagoModule, DatePipe , MemberMessagesComponent],
   templateUrl: './member-detial.component.html',
   styleUrl: './member-detial.component.css'
 })
