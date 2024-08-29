@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { AccountService } from '../../_services/account.service';
-import { Member } from '../../Models/member';
+import { Member } from '../../_models/member';
 import { MembersService } from '../../_services/members.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgForm } from '@angular/forms';

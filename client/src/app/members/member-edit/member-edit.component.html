@@ -29,11 +29,11 @@
         </div>
         <div>
           <strong>Last Active:</strong>
-          <p>{{member.lastActive | timeago}}</p>
+          <p>{{member.lastActive}}</p>
         </div>
         <div>
           <strong>Member since:</strong>
-          <p>{{member.created | date: 'longDate'}}</p>
+          <p>{{member.created}}</p>
         </div>
       </div>
       <div class="card-footer">
@@ -82,10 +82,7 @@
                    class="form-control mx-2"
                    name="country">
           </div>
-
         </form>
-
-
       </tab>
       <tab heading="Edit photos">
         <app-photo-editor [member]="member"
