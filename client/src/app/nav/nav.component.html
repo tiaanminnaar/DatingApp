@@ -25,11 +25,11 @@
 
     @if (accountService.currentUser()) {
     <div dropdown class="dropdown">11 
-      <!--<img class="me-2"
+      <img class="me-2"
            src="{{accountService.currentUser()?.photoUrl || './assets/user.png'}}"
-           alt="user main image">-->
+           alt="user main image">
       <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
-        <!--Welcome {{accountService.currentUser()?.knownAs}}-->
+        Welcome {{accountService.currentUser()?.knownAs}}
       </a>
       <div *dropdownMenu class="dropdown-menu">
         <a routerLink="/member/edit" class="dropdown-item">Edit profile</a>
@@ -40,12 +40,12 @@
     }
 
     @if (!accountService.currentUser()) {
-    <!--<form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off">
+    <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off">
       <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username">
       <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password"
              type="password">
       <button class="btn btn-success" type="submit">Login</button>
-    </form>-->
+    </form>
     }
 
 

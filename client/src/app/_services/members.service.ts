@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Injectable, inject, model, signal } from '@angular/core';
+import { Injectable, WritableSignal, inject, model, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { of, tap } from 'rxjs';
@@ -8,6 +8,7 @@ import { PaginatedResult } from '../_models/pagination';
 import { PreloadAllModules } from '@angular/router';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
+import { setPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,9 @@ export class MembersService {
   getMembers() {
     const response = this.memberCache.get(Object.values(this.userParams()).join('-'));
 
-    if (response) return this.setPaginatedResponse(response);
+    if (response) return this.setPaginatedResponse(response, this.paginatedResult);
 
-    let params = this.setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
+    let params = setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
 
     params = params.append('minAge', this.userParams().minAge);
     params = params.append('maxAge', this.userParams().maxAge);
@@ -39,28 +40,14 @@ export class MembersService {
 
     return this.http.get<Member[]>(this.baseUrl + 'users', { observe: 'response', params }).subscribe({
       next: response => {
-        this.setPaginatedResponse(response);
+        this.setPaginatedResponse(response, this.paginatedResult);
         this.memberCache.set(Object.values(this.userParams()).join('-'), response);
       }
     })
   }
-
-  private setPaginatedResponse(response: HttpResponse<Member[]>) {
-    this.paginatedResult.set({
-      items: response.body as Member[],
-      pagination: JSON.parse(response.headers.get('pagination')!)
-    })
-  }
-
-  private setPaginationHeaders(pageNumber: number, pageSize: number) {
-    let params = new HttpParams();
-
-    if (pageNumber && pageSize) {
-      params = params.append('pageNumber', pageNumber);
-      params = params.append('pageSize', pageSize);
+    setPaginatedResponse(response: any, paginatedResult: WritableSignal<PaginatedResult<Member[]> | null>) {
+        throw new Error('Method not implemented.');
     }
-    return params;
-  }
 
   getMember(username: string) {
     const member: Member = [...this.memberCache.values()]
