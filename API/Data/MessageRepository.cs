@@ -19,12 +19,12 @@ namespace API.Data
 
         public void AddMessage(Message message)
         {
-            context.Message.Add(message);
+            context.Messages.Add(message);
         }
 
         public void DeleteMessage(Message message)
         {
-            context.Message.Remove(message);
+            context.Messages.Remove(message);
         }
 
         public async Task<Connection?> GetConnection(string connectionId)
@@ -42,7 +42,7 @@ namespace API.Data
 
         public async Task<Message?> GetMessage(int id)
         {
-            return await context.Message.FindAsync(id);
+            return await context.Messages.FindAsync(id);
         }
 
         public async Task<Group?> GetMessageGroup(string groupName)
@@ -54,7 +54,7 @@ namespace API.Data
 
         public async Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams)
         {
-            var query = context.Message
+            var query = context.Messages
                 .OrderByDescending(x => x.MessageSent)
                 .AsQueryable();
 
@@ -76,7 +76,7 @@ namespace API.Data
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
-            var query = context.Message
+            var query = context.Messages
                 .Where(x =>
                     x.RecipientUsername == currentUsername
                         && x.RecipientDeleted == false
