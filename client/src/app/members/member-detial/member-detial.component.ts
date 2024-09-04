@@ -13,10 +13,10 @@ import { AccountService } from '../../_services/account.service';
 import { HubConnectionState } from '@microsoft/signalr';
 
 @Component({
-  selector: 'app-member-detail',
+  selector: 'app-member-detial',
   standalone: true,
-  templateUrl: './member-detail.component.html',
-  styleUrl: './member-detail.component.css',
+  templateUrl: './member-detial.component.html',
+  styleUrl: './member-detial.component.css',
   imports: [TabsModule, GalleryModule, TimeagoModule, DatePipe, MemberMessagesComponent]
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
