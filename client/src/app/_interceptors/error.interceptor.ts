@@ -1,8 +1,8 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Navigation, NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, throwError } from 'rxjs';
+import { catchError } from 'rxjs';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
@@ -15,12 +15,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           case 400:
             if (error.error.errors) {
               const modalStateErrors = [];
-              for (const key in error.error.errrors) {
+              for (const key in error.error.errors) {
                 if (error.error.errors[key]) {
                   modalStateErrors.push(error.error.errors[key])
                 }
               }
-              throw modalStateErrors.flat()
+              throw modalStateErrors.flat();
             } else {
               toastr.error(error.error, error.status)
             }
@@ -32,15 +32,15 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             router.navigateByUrl('/not-found');
             break;
           case 500:
-            const navigationExtras: NavigationExtras = { state: { error: error.error } };
+            const navigationExtras: NavigationExtras = {state: {error: error.error}};
             router.navigateByUrl('/server-error', navigationExtras);
             break;
           default:
-            toastr.error('Something  unexpecterd went wrong');
+            toastr.error('Something unexpected went wrong');
             break;
         }
       }
       throw error;
     })
-  );
+  )
 };

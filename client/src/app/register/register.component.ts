@@ -7,11 +7,11 @@ import { DatePickerComponent } from '../_forms/date-picker/date-picker.component
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
-  imports: [ReactiveFormsModule, NgIf, TextInputComponent, DatePickerComponent]
+    selector: 'app-register',
+    standalone: true,
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.css',
+    imports: [ReactiveFormsModule, NgIf, TextInputComponent, DatePickerComponent]
 })
 export class RegisterComponent implements OnInit {
   private accountService = inject(AccountService);
@@ -35,8 +35,8 @@ export class RegisterComponent implements OnInit {
       dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4),
-      Validators.maxLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(4), 
+          Validators.maxLength(8)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]],
     });
     this.registerForm.controls['password'].valueChanges.subscribe({
@@ -46,15 +46,15 @@ export class RegisterComponent implements OnInit {
 
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
-      return control.value === control.parent?.get(matchTo)?.value ? null : { isMatching: true }
+      return control.value === control.parent?.get(matchTo)?.value ? null : {isMatching: true}
     }
   }
 
   register() {
     const dob = this.getDateOnly(this.registerForm.get('dateOfBirth')?.value);
-    this.registerForm.patchValue({ dateOfBirth: dob });
+    this.registerForm.patchValue({dateOfBirth: dob});
     this.accountService.register(this.registerForm.value).subscribe({
-      next: _ => this.router.navigateByUrl('/members'),
+      next: _ => this.router.navigateByUrl('/members') ,
       error: error => this.validationErrors = error
     })
   }
@@ -66,5 +66,5 @@ export class RegisterComponent implements OnInit {
   private getDateOnly(dob: string | undefined) {
     if (!dob) return;
     return new Date(dob).toISOString().slice(0, 10);
-  }
+  } 
 }

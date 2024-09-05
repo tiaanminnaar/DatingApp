@@ -62,7 +62,7 @@ export class MessageService {
 
     params = params.append('Container', container);
 
-    return this.http.get<Message[]>(this.baseUrl + 'messages', { observe: 'response', params })
+    return this.http.get<Message[]>(this.baseUrl + 'messages', {observe: 'response', params})
       .subscribe({
         next: response => setPaginatedResponse(response, this.paginatedResult)
       })
@@ -73,7 +73,7 @@ export class MessageService {
   }
 
   async sendMessage(username: string, content: string) {
-    return this.hubConnection?.invoke('SendMessage', { recipientUsername: username, content })
+    return this.hubConnection?.invoke('SendMessage', {recipientUsername: username, content})
   }
 
   deleteMessage(id: number) {

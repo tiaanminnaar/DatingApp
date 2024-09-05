@@ -1,16 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { OnInit, inject } from '@angular/core';
 import { Component } from '@angular/core';
-import { RegisterComponent } from '../register/register.component';
+import { RegisterComponent } from "../register/register.component";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [RegisterComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
+    imports: [RegisterComponent]
 })
-export class HomeComponent{
+export class HomeComponent {
   registerMode = false;
 
   registerToggle() {

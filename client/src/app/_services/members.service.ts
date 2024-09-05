@@ -1,14 +1,13 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Injectable, WritableSignal, inject, model, signal } from '@angular/core';
+import { Injectable, inject, model, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { of, tap } from 'rxjs';
 import { Photo } from '../_models/photo';
 import { PaginatedResult } from '../_models/pagination';
-import { PreloadAllModules } from '@angular/router';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
-import { setPaginationHeaders } from './paginationHelper';
+import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class MembersService {
   getMembers() {
     const response = this.memberCache.get(Object.values(this.userParams()).join('-'));
 
-    if (response) return this.setPaginatedResponse(response, this.paginatedResult);
+    if (response) return setPaginatedResponse(response, this.paginatedResult);
 
     let params = setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
 
@@ -38,16 +37,13 @@ export class MembersService {
     params = params.append('gender', this.userParams().gender);
     params = params.append('orderBy', this.userParams().orderBy);
 
-    return this.http.get<Member[]>(this.baseUrl + 'users', { observe: 'response', params }).subscribe({
+    return this.http.get<Member[]>(this.baseUrl + 'users', {observe: 'response', params}).subscribe({
       next: response => {
-        this.setPaginatedResponse(response, this.paginatedResult);
+        setPaginatedResponse(response, this.paginatedResult);
         this.memberCache.set(Object.values(this.userParams()).join('-'), response);
       }
     })
   }
-    setPaginatedResponse(response: any, paginatedResult: WritableSignal<PaginatedResult<Member[]> | null>) {
-        throw new Error('Method not implemented.');
-    }
 
   getMember(username: string) {
     const member: Member = [...this.memberCache.values()]

@@ -8,17 +8,17 @@ namespace API.Helpers
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var resaultContext = await next();
+            var resultContext = await next();
 
             if (context.HttpContext.User.Identity?.IsAuthenticated != true) return;
 
-            var userId = resaultContext.HttpContext.User.GetUserId();
+            var userId = resultContext.HttpContext.User.GetUserId();
 
-            var repo = resaultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-            var user = await repo.GetUserByIdAsync(userId);
+            var unitOfWork = resultContext.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
+            var user = await unitOfWork.UserRepository.GetUserByIdAsync(userId);
             if (user == null) return;
             user.LastActive = DateTime.UtcNow;
-            await repo.SaveAllAsync();
+            await unitOfWork.Complete();
         }
     }
 }

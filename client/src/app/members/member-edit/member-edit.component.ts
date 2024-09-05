@@ -10,15 +10,15 @@ import { DatePipe } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
-  selector: 'app-member-edit',
-  standalone: true,
-  templateUrl: './member-edit.component.html',
-  styleUrl: './member-edit.component.css',
+    selector: 'app-member-edit',
+    standalone: true,
+    templateUrl: './member-edit.component.html',
+    styleUrl: './member-edit.component.css',
   imports: [TabsModule, FormsModule, PhotoEditorComponent, DatePipe, TimeagoModule]
 })
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm') editForm?: NgForm;
-  @HostListener('window:beforeunload', ['$event']) notify($event: any) {
+  @HostListener('window:beforeunload', ['$event']) notify($event:any) {
     if (this.editForm?.dirty) {
       $event.returnValue = true;
     }
